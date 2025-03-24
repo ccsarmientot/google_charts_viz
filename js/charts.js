@@ -4,55 +4,36 @@ google.charts.setOnLoadCallback(loadData);
 async function loadData() {
     const data = [
         {
-            title:"Garena Free Fire- World Series",
-            category:"GAME_ACTION",
-            US_Sales:644036.0,
-            EU_Sales:813832.0,
-            Global_Sales:449410.0,
-            JP_Sales:586095.0,
-            User_Rating:4.0,
-            Critic_Rating:2.0
+            category:"RACING",
+            US_Sales:51125689.0,
+            EU_sales:60300310.0,
+            Global_sales:47787420.0
         },
         {
-            title:"PUBG MOBILE - Traverse",
-            category:"GAME_ACTION",
-            US_Sales:647580.0,
-            EU_Sales:760325.0,
-            Global_Sales:860449.0,
-            JP_Sales:265192.0,
-            User_Rating:7.0,
-            Critic_Rating:4.0
+            category:"ADVENTURE",
+            US_Sales:55864580.0,
+            EU_sales:53395745.0,
+            Global_sales:50949923.0
         },
         {
-            title:"Mobile Legends: Bang Bang",
-            category:"GAME_ACTION",
-            US_Sales:811867.0,
-            EU_Sales:133075.0,
-            Global_Sales:797335.0,
-            JP_Sales:582151.0,
-            User_Rating:8.0,
-            Critic_Rating:1.0
+            category:"CASINO",
+            US_Sales:53425725.0,
+            EU_sales:48724925.0,
+            Global_sales:52946257.0
         },
         {
-            title:"Brawl Stars",
-            category:"GAME_ACTION",
-            US_Sales:700329.0,
-            EU_Sales:958875.0,
-            Global_Sales:895912.0,
-            JP_Sales:637512.0,
-            User_Rating:5.0,
-            Critic_Rating:9.0
+            category:"MUSIC",
+            US_Sales:52007850.0,
+            EU_sales:52838117.0,
+            Global_sales:52995671.0
         },
         {
-            title:"Sniper 3D: Fun Free Online FPS Shooting Game",
-            category:"GAME_ACTIO",
-            US_Sales:757943.0,
-            EU_Sales:635674.0,
-            Global_Sales:546729.0,
-            JP_Sales:649200.0,
-            User_Rating:3.0,
-            Critic_Rating:1.0
+            category:"ACTION",
+            US_Sales:55933050.0,
+            EU_sales:57526026.0,
+            Global_sales:53279574.0
         }
+    
     ];
     const excelData = await loadExcelData();
     processChartData(data, excelData);
@@ -89,24 +70,26 @@ function processChartData(data, excelData) {
     drawBarChart(data);
     drawGeoChart(excelData);     // Gráfico 3
     drawComboChart(excelData);   // Gráfico 4
-    drawColumnChart(data);
-    drawBubbleChart(data);
+    drawColumnChart(excelData);
+    drawBubbleChart(excelData);
 }
 
+// Gráfico 1: Distribución de ventas globales por categorías
 function drawPieChart(data) {
     let chartData = [['Categoría', 'Ventas Globales']];
-    data.forEach(row => chartData.push([row.category, row.Global_Sales]));
+    data.forEach(row => chartData.push([row.category, row.Global_sales]));
     let dataTable = google.visualization.arrayToDataTable(chartData);
     let chart = new google.visualization.PieChart(document.getElementById('chart1'));
-    chart.draw(dataTable, { title: 'Ventas Globales por Categoría' });
+    chart.draw(dataTable, { title: 'Ventas Globales en top 5 Categorías' });
 }
 
+// Gráfico 2: Comparativa de ventas de EU y Europa con respecto a la categoría
 function drawBarChart(data) {
-    let chartData = [['Juego', 'Ventas en EE.UU.', 'Ventas en Europa']];
-    data.forEach(row => chartData.push([row.title, row.US_Sales, row.EU_Sales]));
+    let chartData = [['Categoría', 'Ventas en EE.UU.', 'Ventas en Europa']];
+    data.forEach(row => chartData.push([row.category, row.US_Sales, row.EU_sales]));
     let dataTable = google.visualization.arrayToDataTable(chartData);
     let chart = new google.visualization.BarChart(document.getElementById('chart2'));
-    chart.draw(dataTable, { title: 'Comparación de Ventas EE.UU. vs Europa' });
+    chart.draw(dataTable, { title: 'Comparación de Ventas EE.UU. vs Europa en top 5 categorías' });
 }
 
 // Gráfico 3: Gráfico que compara las ventas de los 3 primeros juegos en EU, US y JP para las 3 categorías más grandes
@@ -293,7 +276,7 @@ function drawComboChart(data) {
 
 function drawColumnChart(data) {
     let chartData = [['Juego', 'Ventas Globales']];
-    data.forEach(row => chartData.push([row.title, row.Global_Sales]));
+    data.forEach(row => chartData.push([row.title, row.Global_sales]));
     let dataTable = google.visualization.arrayToDataTable(chartData);
     let chart = new google.visualization.ColumnChart(document.getElementById('chart5'));
     chart.draw(dataTable, { title: 'Ventas Globales por Juego' });
@@ -301,7 +284,7 @@ function drawColumnChart(data) {
 
 function drawBubbleChart(data) {
     let chartData = [['Juego', 'Calificación de Usuario', 'Ventas Globales']];
-    data.forEach(row => chartData.push([row.title, row.User_Rating, row.Global_Sales]));
+    data.forEach(row => chartData.push([row.title, row.User_rating, row.Global_sales]));
     let dataTable = google.visualization.arrayToDataTable(chartData);
     let chart = new google.visualization.BubbleChart(document.getElementById('chart6'));
     chart.draw(dataTable, { title: 'Relación entre Calificación y Ventas Globales' });
